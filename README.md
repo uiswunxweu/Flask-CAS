@@ -1,9 +1,6 @@
 Flask-CAS
 =========
-
-[![Join the chat at https://gitter.im/cameronbwhite/Flask-CAS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cameronbwhite/Flask-CAS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-[![Build Status](https://travis-ci.org/cameronbwhite/Flask-CAS.png?branch=master)](https://travis-ci.org/cameronbwhite/Flask-CAS)
+Forked from https://github.com/cameronbwhite/Flask-CAS where development had stalled.
 
 Flask-CAS is a Flask extension which makes it easy to
 authenticate with a CAS Server (v2.0+).
@@ -17,15 +14,6 @@ userid and password) only once. It also allows web applications
 to authenticate users without gaining access to a user's security 
 credentials, such as a password. The name CAS also refers to a 
 software package that implements this protocol. 
-
-http://jasig.github.io/cas
-
-## Demo ##
-
-Want to see it in action? Here is a live demo that lets you 
-authenticate against your favorite CAS Server!
-
-http://flask-cas-extension-demo.cameronbwhite.com/
 
 ## Installation ##
 
@@ -42,7 +30,7 @@ pip install Flask-CAS
 If you want to do it the hard way you can clone the repository and
 install Flask-CAS in a virtualenv. 
 
-1. Clone it `git clone git@github.com:cameronbwhite/Flask-CAS.git`
+1. Clone it `git clone url`
 2. Enter it `cd Flask-CAS`
 3. Create a virtualenv and enter it (Optional) `virtualenv venv && source venv/bin/activate`
 4. Install it `python setup.py install`
@@ -54,7 +42,7 @@ packages. There is only one thing you care about inside the package
 which is the `CAS` class.
 
 ```python
-from flask.ext.cas import CAS
+from flask_cas import CAS
 ```
 
 There are two ways to use the `CAS` class.
@@ -94,15 +82,15 @@ For convenience you can use the `cas.login` and `cas.logout`
 functions to redirect users to the login and logout pages. 
 
 ```python
-from flask.ext.cas import login
-from flask.ext.cas import logout
+from flask_cas import login
+from flask_cas import logout
 ```
 
 If you would like to require that a user is logged in before continuing
 you may use the `cas.login_required` method.
 
 ```python
-from flask.ext.cas import login_required
+from flask_cas import login_required
 
 app.route('/foo')
 @login_required
@@ -121,8 +109,8 @@ def foo():
 
 #### Optional Configs ####
 
-|Key                        | Default               |
-|---------------------------|-----------------------|
+|Key                        | Default               | Values |
+|---------------------------|-----------------------|--------|
 |CAS_TOKEN_SESSION_KEY      | _CAS_TOKEN            |
 |CAS_USERNAME_SESSION_KEY   | CAS_USERNAME          |
 |CAS_ATTRIBUTES_SESSION_KEY | CAS_ATTRIBUTES        |
@@ -130,14 +118,16 @@ def foo():
 |CAS_LOGOUT_ROUTE           | '/cas/logout'         |
 |CAS_VALIDATE_ROUTE         | '/cas/serviceValidate'|
 |CAS_AFTER_LOGOUT           | None                  |
+|CAS_RENEW                  | None                  | true, or not set |
+
 
 ## Example ##
 
 ```python
 import flask
 from flask import Flask
-from flask.ext.cas import CAS
-from flask.ext.cas import login_required
+from flask_cas import CAS
+from flask_cas import login_required
 
 app = Flask(__name__)
 cas = CAS(app, '/cas')
