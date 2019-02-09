@@ -97,8 +97,7 @@ def create_cas_logout_url(cas_url, cas_route, service=None):
     )
 
 
-def create_cas_validate_url(cas_url, cas_route, service, ticket,
-                            renew=None):
+def create_cas_validate_url(cas_url, cas_route, service, ticket, renew=None):
     """ Create a CAS validate URL.
 
     Keyword arguments:
