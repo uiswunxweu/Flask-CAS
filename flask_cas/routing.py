@@ -73,7 +73,7 @@ def logout():
     if cas_attributes_session_key in flask.session:
         del flask.session[cas_attributes_session_key]
 
-    if(current_app.config['CAS_AFTER_LOGOUT'] != None):
+    if current_app.config['CAS_AFTER_LOGOUT'] is not None:
         redirect_url = create_cas_logout_url(
             current_app.config['CAS_SERVER'],
             current_app.config['CAS_LOGOUT_ROUTE'],
@@ -111,16 +111,16 @@ def validate(ticket):
         cas_validate_url))
 
     xml_from_dict = {}
-    isValid = False
+    is_valid = False
 
     try:
         xmldump = urlopen(cas_validate_url).read().strip().decode('utf8', 'ignore')
         xml_from_dict = parse(xmldump)
-        isValid = True if "cas:authenticationSuccess" in xml_from_dict["cas:serviceResponse"] else False
+        is_valid = True if "cas:authenticationSuccess" in xml_from_dict["cas:serviceResponse"] else False
     except ValueError:
         current_app.logger.error("CAS returned unexpected result")
 
-    if isValid:
+    if is_valid:
         current_app.logger.debug("valid")
         xml_from_dict = xml_from_dict["cas:serviceResponse"]["cas:authenticationSuccess"]
         username = xml_from_dict["cas:user"]
@@ -129,11 +129,12 @@ def validate(ticket):
         if "cas:memberOf" in attributes:
             attributes["cas:memberOf"] = attributes["cas:memberOf"].lstrip('[').rstrip(']').split(',')
             for group_number in range(0, len(attributes['cas:memberOf'])):
-                attributes['cas:memberOf'][group_number] = attributes['cas:memberOf'][group_number].lstrip(' ').rstrip(' ')
+                attributes['cas:memberOf'][group_number] = \
+                    attributes['cas:memberOf'][group_number].lstrip(' ').rstrip(' ')
 
         flask.session[cas_username_session_key] = username
         flask.session[cas_attributes_session_key] = attributes
     else:
         current_app.logger.debug("invalid")
 
-    return isValid
+    return is_valid
