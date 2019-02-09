@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
             .. code:: python
 
-                from flask.ext.cas import CAS
+                from flask_cas import CAS
 
                 CAS(app)
 
