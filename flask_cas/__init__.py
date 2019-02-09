@@ -17,6 +17,7 @@ from . import routing
 
 from functools import wraps
 
+
 class CAS(object):
     """
     Required Configs:
@@ -28,8 +29,8 @@ class CAS(object):
 
     Optional Configs:
 
-    |Key                        | Default               |
-    |---------------------------|-----------------------|
+    |Key                        | Default               |                  |
+    |---------------------------|-----------------------|------------------|
     |CAS_TOKEN_SESSION_KEY      | _CAS_TOKEN            |
     |CAS_USERNAME_SESSION_KEY   | CAS_USERNAME          |
     |CAS_ATTRIBUTES_SESSION_KEY | CAS_ATTRIBUTES        |
@@ -37,6 +38,7 @@ class CAS(object):
     |CAS_LOGOUT_ROUTE           | '/cas/logout'         |
     |CAS_VALIDATE_ROUTE         | '/cas/serviceValidate'|
     |CAS_AFTER_LOGOUT           | None                  |
+    |CAS_RENEW                  | None                  | true, or not set |
     """
 
     def __init__(self, app=None, url_prefix=None):
@@ -52,6 +54,7 @@ class CAS(object):
         app.config.setdefault('CAS_LOGIN_ROUTE', '/cas')
         app.config.setdefault('CAS_LOGOUT_ROUTE', '/cas/logout')
         app.config.setdefault('CAS_VALIDATE_ROUTE', '/cas/serviceValidate')
+        app.config.setdefault('CAS_RENEW', None)
         # Requires CAS 2.0
         app.config.setdefault('CAS_AFTER_LOGOUT', None)
         # Register Blueprint
@@ -86,11 +89,14 @@ class CAS(object):
         return flask.session.get(
             self.app.config['CAS_TOKEN_SESSION_KEY'], None)
 
+
 def login():
     return flask.redirect(flask.url_for('cas.login', _external=True))
 
+
 def logout():
     return flask.redirect(flask.url_for('cas.logout', _external=True))
+
 
 def login_required(function):
     @wraps(function)
