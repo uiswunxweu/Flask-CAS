@@ -7,12 +7,12 @@ import textwrap
 
 if __name__ == "__main__":
     setuptools.setup(
-        name="Flask-CAS",
+        name="Flask-CAS-cb",
         version="1.0.2",
         description="Flask extension for CAS",
-        author="Cameron Brandon White",
-        author_email="cameronbwhite90@gmail.com",
-        url="https://github.com/cameronbwhite/Flask-CAS",
+        author="Aardvark Schmedlap",
+        author_email="FnP5gdYqCuSM8cEN@protonmail.com",
+        url="https://github.com/uiswunxweu/Flask-CAS",
         long_description=textwrap.dedent("""\
             Flask-CAS
             =========
@@ -67,7 +67,7 @@ if __name__ == "__main__":
             Reference documentation
             =======================
 
-            See https://github.com/cameronbwhite/Flask-CAS"""),
+            See https://github.com/uiswunxweu/Flask-CAS"""),
         packages=[
             "flask_cas",
         ],
